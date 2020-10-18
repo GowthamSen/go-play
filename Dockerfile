@@ -1,6 +1,10 @@
 FROM golang:latest
 RUN mkdir /app
 LABEL maintainer="Gowtham Sen Potnuru"
-RUN go get "github.com/GowthamSen/go-play" 
+WORKDIR /app
+COPY go.mod ./
+RUN go mod download
+COPY . .
 RUN go build -o main .
-CMD ["/app/main"]
+EXPOSE 8080
+CMD ["./main"]
